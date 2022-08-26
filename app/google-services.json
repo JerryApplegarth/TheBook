@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "908358244422",
+    "project_id": "thebook-de01f",
+    "storage_bucket": "thebook-de01f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:908358244422:android:8da49029979274f1e1d247",
+        "android_client_info": {
+          "package_name": "com.applecompose.thebook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "908358244422-7ggfboocd4gsk8nrni3r5eujg5357be3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.applecompose.thebook",
+            "certificate_hash": "50464cfe8261359b0e822c81c55dd78d024cbe8c"
+          }
+        },
+        {
+          "client_id": "908358244422-jg9lg4esvjqpmjfl80e2kkmp83hq0hta.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1TV4ClJkDPt8SUQRRlLFluW2KnS_lPCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "908358244422-jg9lg4esvjqpmjfl80e2kkmp83hq0hta.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
