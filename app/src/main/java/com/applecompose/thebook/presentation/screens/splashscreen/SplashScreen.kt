@@ -18,7 +18,9 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.applecompose.thebook.presentation.navigation.screen.Screen
 import kotlinx.coroutines.delay
+import com.applecompose.thebook.presentation.components.BookLogo
 
 @Composable
 fun SplashScreen(navController: NavController) {
@@ -33,10 +35,8 @@ fun SplashScreen(navController: NavController) {
 				.getInterpolation(it)
 		}))
 		delay(2000L)
-
+		navController.navigate(Screen.LoginScreen.route)
 	}
-
-
 	Surface(modifier = Modifier
 		.padding(16.dp)
 		.size(330.dp)
@@ -46,7 +46,6 @@ fun SplashScreen(navController: NavController) {
 		border = BorderStroke(
 			2.dp,
 			color = Color.LightGray),
-
 	) {
 		Column(
 			modifier = Modifier
@@ -54,24 +53,14 @@ fun SplashScreen(navController: NavController) {
 			horizontalAlignment = Alignment.CenterHorizontally,
 			verticalArrangement = Arrangement.Center
 		) {
-			Text(
-				text = "The Book",
-				style = MaterialTheme.typography.h3,
-				color = MaterialTheme.colors.primary.copy(alpha = 0.7f)
-				)
+			BookLogo()
 			Spacer(modifier = Modifier.height(16.dp))
 			Text(
 				text = "\"Read Something Today\"",
 				style = MaterialTheme.typography.h5,
 				color = MaterialTheme.colors.primaryVariant
-
 				)
-
-
-
 		}
-
 	}
-
-
 }
+
