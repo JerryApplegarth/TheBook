@@ -1,14 +1,14 @@
 package com.applecompose.thebook.presentation.screens.login
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,17 +21,20 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.state.ToggleableState
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.applecompose.thebook.R
 import com.applecompose.thebook.presentation.components.BookLogo
+import com.applecompose.thebook.presentation.components.buttons.SubmitButton
 import com.applecompose.thebook.presentation.components.emails.EmailInput
 import com.applecompose.thebook.presentation.components.password.PasswordInput
 
 @Composable
 fun LoginScreen(navController: NavController) {
+	val showLoginForm = rememberSaveable { mutableStateOf(true) }
 	Surface(
 		modifier = Modifier
 			.fillMaxSize()
@@ -41,10 +44,48 @@ fun LoginScreen(navController: NavController) {
 			verticalArrangement = Arrangement.Top
 		) {
 			BookLogo()
-			UserForm(loading = false, isCreateAccount = false) { email, password ->
-				Log.d("FORM", "LoginScreen: $email $password")
+			if (showLoginForm.value) UserForm(
+				loading = false,
+				isCreateAccount = false
+			) { email, password -> }
+			// todo FB Login
+			else {
+				UserForm(
+					loading = false,
+					isCreateAccount = true,) { email, password -> }
+				//todo firebase account
+
+
+			}
+			Spacer(modifier = Modifier.height(6.dp))
+			Row(
+				modifier = Modifier
+					.padding(6.dp),
+				horizontalArrangement = Arrangement.Center,
+				verticalAlignment = Alignment.Top
+			) {
+				val text = if (showLoginForm.value) "Sign Up" else "Login"
+				Text(
+					text = "NewUser?",
+					fontSize = 20.sp
+					)
+				Spacer(modifier = Modifier.width(16.dp))
+				Text(
+					text = text,
+
+					style = TextStyle(
+						MaterialTheme.colors.primary,
+						fontSize = 20.sp
+						),
+					modifier = Modifier
+						.clickable {
+							showLoginForm.value = !showLoginForm.value
+						}
+					)
+
 			}
 		}
+
 	}
 }
 
@@ -68,7 +109,7 @@ fun UserForm(
 		email.value.trim().isNotEmpty() && password.value.trim().isNotEmpty()
 	}
 	val modifier = Modifier
-		.height(250.dp)
+		.height(240.dp)
 		.background(MaterialTheme.colors.background)
 		.verticalScroll(rememberScrollState())
 
@@ -113,27 +154,6 @@ fun UserForm(
 
 
 	}
-}
-
-@Composable
-fun SubmitButton(
-	textId: String,
-	loading: Boolean,
-	validInputs: Boolean,
-	onClick: () -> Unit
-) {
-	Button(
-		onClick = onClick,
-		modifier = Modifier
-			.fillMaxWidth(),
-		enabled = !loading && validInputs,
-		shape = CircleShape,
-	) {
-		if (loading) CircularProgressIndicator(modifier = Modifier.size(24.dp))
-		else Text(text = textId, modifier = Modifier.padding(6.dp))
-	}
-
-
 }
 
 
