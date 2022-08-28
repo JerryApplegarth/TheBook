@@ -17,14 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.applecompose.thebook.R
 import com.applecompose.thebook.presentation.components.BookLogo
@@ -32,74 +31,61 @@ import com.applecompose.thebook.presentation.components.buttons.SubmitButton
 import com.applecompose.thebook.presentation.components.emails.EmailInput
 import com.applecompose.thebook.presentation.components.password.PasswordInput
 
+
+@ExperimentalComposeUiApi
 @Composable
 fun LoginScreen(navController: NavController) {
 	val showLoginForm = rememberSaveable { mutableStateOf(true) }
-	Surface(
-		modifier = Modifier
-			.fillMaxSize()
-	) {
+	Surface(modifier = Modifier.fillMaxSize()) {
 		Column(
 			horizontalAlignment = Alignment.CenterHorizontally,
 			verticalArrangement = Arrangement.Top
 		) {
 			BookLogo()
-			if (showLoginForm.value) UserForm(
-				loading = false,
-				isCreateAccount = false
-			) { email, password -> }
-			// todo FB Login
+			if (showLoginForm.value)
+				UserForm(loading = false, isCreateAccount = false) { email, password ->
+					// todo FB Login
+				}
 			else {
-				UserForm(
-					loading = false,
-					isCreateAccount = true,) { email, password -> }
-				//todo firebase account
-
-
+				UserForm(loading = false, isCreateAccount = true) { email, password ->
+					// todo FB account
+				}
 			}
-			Spacer(modifier = Modifier.height(6.dp))
-			Row(
-				modifier = Modifier
-					.padding(6.dp),
-				horizontalArrangement = Arrangement.Center,
-				verticalAlignment = Alignment.Top
-			) {
-				val text = if (showLoginForm.value) "Sign Up" else "Login"
-				Text(
-					text = "NewUser?",
-					fontSize = 20.sp
-					)
-				Spacer(modifier = Modifier.width(16.dp))
-				Text(
-					text = text,
 
-					style = TextStyle(
-						MaterialTheme.colors.primary,
-						fontSize = 20.sp
-						),
-					modifier = Modifier
-						.clickable {
-							showLoginForm.value = !showLoginForm.value
-						}
-					)
-
-			}
 		}
+		Spacer(modifier = Modifier.height(15.dp))
+		Row(
+			modifier = Modifier.padding(15.dp),
+			horizontalArrangement = Arrangement.Center,
+			verticalAlignment = Alignment.CenterVertically
+		) {
+			val text = if (showLoginForm.value) "Sign up" else "Login"
+			Text(text = "New User?")
+			Spacer(modifier = Modifier.width(16.dp))
+			Text(text,
+				modifier = Modifier
+					.clickable {
+						showLoginForm.value = !showLoginForm.value
 
+					}
+					.padding(start = 5.dp),
+				fontWeight = FontWeight.Bold,
+				color = MaterialTheme.colors.secondaryVariant)
+
+
+		}
 	}
+
 }
 
-
-@OptIn(ExperimentalComposeUiApi::class)
+@ExperimentalComposeUiApi
 @Preview
 @Composable
 fun UserForm(
 	loading: Boolean = false,
 	isCreateAccount: Boolean = false,
 	onDone: (String, String) -> Unit = { email, password -> }
-
 ) {
-	val focusManager = LocalFocusManager.current
 	val email = rememberSaveable { mutableStateOf("") }
 	val password = rememberSaveable { mutableStateOf("") }
 	val passwordVisibility = rememberSaveable { mutableStateOf(false) }
@@ -107,23 +93,28 @@ fun UserForm(
 	val keyboardController = LocalSoftwareKeyboardController.current
 	val valid = remember(email.value, password.value) {
 		email.value.trim().isNotEmpty() && password.value.trim().isNotEmpty()
+
 	}
 	val modifier = Modifier
-		.height(240.dp)
+		.height(250.dp)
 		.background(MaterialTheme.colors.background)
 		.verticalScroll(rememberScrollState())
+
 
 	Column(
 		modifier,
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
 		if (isCreateAccount) Text(
-			text = stringResource(R.string.create_account),
-			modifier = Modifier.padding(4.dp)
-		) else Text("")
+			text = stringResource(id = R.string.enter_email_and_password),
+			modifier = Modifier.padding(12.dp)
+		)
+		else Text(
+			text = stringResource(id = R.string.login),
+			modifier = Modifier.padding(start = 12.dp, end = 12.dp)
+			)
 		EmailInput(
-			emailState = email,
-			enabled = !loading,
+			emailState = email, enabled = !loading,
 			onAction = KeyboardActions {
 				passwordFocusRequest.requestFocus()
 			},
@@ -136,27 +127,23 @@ fun UserForm(
 			passwordVisibility = passwordVisibility,
 			onAction = KeyboardActions {
 				if (!valid) return@KeyboardActions
-
 				onDone(email.value.trim(), password.value.trim())
-				keyboardController?.hide()
-
 			})
 
 		SubmitButton(
-			textId = if (isCreateAccount) "CreteAccount" else "Login",
+			textId = if (isCreateAccount) "Create Account" else "Login",
 			loading = loading,
-			validInputs = valid,
+			validInputs = valid
 		) {
 			onDone(email.value.trim(), password.value.trim())
 			keyboardController?.hide()
-
 		}
 
 
 	}
+
+
 }
-
-
 
 
 

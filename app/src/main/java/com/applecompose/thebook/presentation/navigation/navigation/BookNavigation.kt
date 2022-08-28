@@ -1,6 +1,7 @@
 package com.applecompose.thebook.presentation.navigation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -8,12 +9,14 @@ import com.applecompose.thebook.presentation.navigation.screen.Screen
 import com.applecompose.thebook.presentation.screens.detailsscreen.DetailsScreen
 import com.applecompose.thebook.presentation.screens.homescreen.HomeScreen
 import com.applecompose.thebook.presentation.screens.login.LoginScreen
+
 import com.applecompose.thebook.presentation.screens.searchscreen.SearchScreen
 import com.applecompose.thebook.presentation.screens.signup.SignupScreen
 import com.applecompose.thebook.presentation.screens.splashscreen.SplashScreen
 import com.applecompose.thebook.presentation.screens.stats.StatsScreen
 import com.applecompose.thebook.presentation.screens.update.UpdateScreen
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun Navigation() {
 	val navController = rememberNavController()
