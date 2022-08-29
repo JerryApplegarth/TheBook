@@ -34,7 +34,7 @@ import com.applecompose.thebook.presentation.components.password.PasswordInput
 
 @ExperimentalComposeUiApi
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController, viewModel: LoginScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
 	val showLoginForm = rememberSaveable { mutableStateOf(true) }
 	Surface(modifier = Modifier.fillMaxSize()) {
 		Column(
@@ -44,7 +44,7 @@ fun LoginScreen(navController: NavController) {
 			BookLogo()
 			if (showLoginForm.value)
 				UserForm(loading = false, isCreateAccount = false) { email, password ->
-					// todo FB Login
+					viewModel.signInWithEmailAndPassword(email, password)
 				}
 			else {
 				UserForm(loading = false, isCreateAccount = true) { email, password ->

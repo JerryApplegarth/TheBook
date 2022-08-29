@@ -26,10 +26,11 @@ class LoginScreenViewModel: ViewModel() {
 		try {
 			auth.signInWithEmailAndPassword(email, password)
 				.addOnCompleteListener { task ->
+					Log.d("FB", "signInWithEmailAndPassword: ${task.result.toString()}")
 					if (task.isSuccessful) {
 						TODO("take them home")
 					}else {
-						Log.d("FB", "signInWithEmailAndPassword: ${task.result.toString()}")
+						Log.d("FB", "signInWithEmailAndPassword: Log in Works ${task.result.toString()}")
 					}
 				}
 		}catch (ex: Exception) {
