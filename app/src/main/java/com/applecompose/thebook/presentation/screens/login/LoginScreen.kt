@@ -96,7 +96,7 @@ fun UserForm(
 
 	}
 	val modifier = Modifier
-		.height(250.dp)
+		.height(260.dp)
 		.background(MaterialTheme.colors.background)
 		.verticalScroll(rememberScrollState())
 
